@@ -51,8 +51,8 @@ public class Home extends AppCompatActivity
 
         View view = navigationView.getHeaderView(0);
 
-        nameTextView = (TextView)findViewById(R.id.header_name_textView);
-        emailTextView = (TextView)findViewById(R.id.header_email_textView);
+        nameTextView = (TextView)view.findViewById(R.id.header_name_textView);
+        emailTextView = (TextView)view.findViewById(R.id.header_email_textView);
 
         nameTextView.setText(auth.getCurrentUser().getDisplayName());
         emailTextView.setText(auth.getCurrentUser().getEmail());

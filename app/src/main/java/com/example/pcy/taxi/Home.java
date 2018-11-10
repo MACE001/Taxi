@@ -1,5 +1,6 @@
 package com.example.pcy.taxi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -54,7 +55,7 @@ public class Home extends AppCompatActivity
         emailTextView = (TextView)findViewById(R.id.header_email_textView);
 
         nameTextView.setText(auth.getCurrentUser().getDisplayName());
-        emailTextView.setText(auth.getCurrentUser().getDisplayName());
+        emailTextView.setText(auth.getCurrentUser().getEmail());
     }
 
     @Override
@@ -107,6 +108,11 @@ public class Home extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        }else if(id == R.id.nav_logout){
+            auth.signOut();
+            finish();
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -53,8 +53,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         SignInButton googleButton = (SignInButton) findViewById(R.id.googleButton);
         googleButton.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View view) {
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
@@ -76,7 +74,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-
+                    //user is signed in
+                    Intent intent = new Intent(getApplicationContext(),Home.class);
+                    startActivity(intent);
                 } else {
 
                 }
@@ -154,5 +154,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        if(mAuthListener != null){
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 }

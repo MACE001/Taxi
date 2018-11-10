@@ -38,8 +38,8 @@
     <item android:title="Preference">
         <menu>
             <item
-                android:id="@+id/nav_login"
-                android:icon="@drawable/ic_subdirectory_arrow_left_black_24dp"
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_share"
                 android:title="Logout" />
         </menu>
     </item>

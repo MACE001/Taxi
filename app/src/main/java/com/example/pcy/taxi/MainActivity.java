@@ -1,22 +1,20 @@
 package com.example.pcy.taxi;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,7 +61,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         pwText = (EditText)findViewById(R.id.pwText);
 
         Button emailLogin = (Button)findViewById(R.id.emailButton);
+        Button registerButton = (Button)findViewById(R.id.registerButton);
         emailLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                loginUser(emailText.getText().toString(),pwText.getText().toString());
+            }
+        });
+        registerButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 createUser(emailText.getText().toString(),pwText.getText().toString());
@@ -75,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     //user is signed in
-                    Intent intent = new Intent(getApplicationContext(),Home.class);
+                    Intent intent = new Intent(getApplicationContext(),client.class);
                     startActivity(intent);
                 } else {
 
@@ -91,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            loginUser(email,password);
+
                         }else{
                             Toast.makeText(MainActivity.this, "가입 성공!", Toast.LENGTH_SHORT).show();  //이메일 회원가입
                         }
@@ -112,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             Toast.makeText(MainActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();  //이메일,패스워드 입력 로그인
                         }
 
-                        // ...
                     }
                 });
     }
@@ -158,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public void onStart() {
         super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
